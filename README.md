@@ -1,48 +1,88 @@
-# MediaPipe Selfie Segmentation with Custom Background Color
+This program uses the MediaPipe library for selfie segmentation to separate the foreground (person) from the background in an image or video stream, and it allows the user to interactively choose a custom background color.
 
-This program utilizes the MediaPipe library for selfie segmentation to separate the foreground (person) from the background in an image or video stream. Additionally, it allows the user to interactively choose a custom background color. The selected color replaces the background in real-time.
+Here's a breakdown of the main components and functionalities:
 
-## Prerequisites
+1. **Import Libraries:**
+   - `cv2`: OpenCV library for computer vision tasks.
+   - `mediapipe`: A library for building applications around machine learning solutions.
 
-Make sure you have the necessary libraries installed:
-
-- OpenCV (`cv2`)
-- MediaPipe (`mediapipe`)
-- NumPy (`numpy`)
-
-```bash
-pip install opencv-python mediapipe numpy
+```python
+import cv2
+import mediapipe as mp
+import numpy as np
+import time
 ```
 
-## Usage
+2. **Initialize MediaPipe Components:**
+   - `mp_drawing`: MediaPipe drawing utilities.
+   - `mp_selfie_segmentation`: MediaPipe selfie segmentation solution.
 
-1. Set the path for the input image (`image_path`) or enable the webcam (`use_webcam`).
-2. Define the default background color (`bg_color`).
-3. Run the script.
-
-```bash
-python selfie_segmentation.py
+```python
+mp_drawing = mp.solutions.drawing_utils
+mp_selfie_segmentation = mp.solutions.selfie_segmentation
 ```
 
-### User Interaction
+3. **Configuration:**
+   - Set the path for the input image (`image_path`) and whether to use a webcam (`use_webcam`).
+   - Set the default and selected background colors.
 
-- **Left-click**: Capture the color at the clicked point and save it to a file (`color.txt`).
-- **Right-click**: Print the selected color in hexadecimal format.
+```python
+image_path = "image/person2.jpeg"
+use_webcam = False  # Set to True to use a webcam
+bg_color = (0, 64, 128)  # Default background color
+color_selected = False
+selected_color = bg_color
+```
 
-### Exiting the Program
+4. **Color Exploration:**
+   - Define functions and variables for capturing and exploring colors.
 
-Press 'Esc' to exit the application.
+```python
+# Functions and variables for color exploration
+# (on_mouse_click, getColor, color_explore, color_selected)
+```
 
-## Color Exploration
+5. **Mouse Click Event Handling:**
+   - Capture the color at the clicked point and save it to a file (`color.txt`).
+   - Right-click to print the selected color in hexadecimal format.
 
-The program allows users to interactively explore and select a custom background color. The selected color is displayed on the output window and saved to a file for later use.
+```python
+cv2.setMouseCallback('MediaPipe Selfie Segmentation', on_mouse_click)
+```
 
-## Credits
+6. **Initialize MediaPipe Selfie Segmentation Model:**
+   - Start the selfie segmentation model.
 
-- This program uses the [MediaPipe](https://mediapipe.dev/) library for selfie segmentation.
+```python
+with mp_selfie_segmentation.SelfieSegmentation(model_selection=0) as selfie_segmentation:
+```
 
-## License
+7. **Main Loop:**
+   - Continuously process frames from the webcam or image.
+   - Extract the segmentation mask and apply it to the frame.
+   - Read the selected color from the `color.txt` file and use it as the custom background.
+   - Display the output with information on the selected color and frames per second (FPS).
 
-This project is licensed under the [MIT License](LICENSE).
+```python
+while True:
+    # Main processing loop
+    # ...
+```
 
-Feel free to customize and use this program for your projects!
+8. **Key Handling:**
+   - Press 'Esc' to exit the application.
+
+```python
+key = cv2.waitKey(1) & 0xFF
+if key == 27:  # Press Esc to exit
+    break
+```
+
+9. **Cleanup:**
+   - Destroy all OpenCV windows when the application is terminated.
+
+```python
+cv2.destroyAllWindows()
+```
+
+Note: This program uses selfie segmentation, allowing users to choose a background color by clicking on it. The selected color is displayed and saved to a file, and the background of the segmented person is replaced with the selected color in real-time. The FPS and selected color information are also displayed on the output window.
