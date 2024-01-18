@@ -1,10 +1,10 @@
-This program uses the MediaPipe library for selfie segmentation to separate the foreground (person) from the background in an image or video stream, and it allows the user to interactively choose a custom background color.
+Program ini menggunakan MediaPipe library untuk melakukan segmentasi selfie dengan tujuan memisahkan latar depan (orang) dari latar belakang dalam gambar atau video. Hal ini memungkinkan pengguna untuk memilih warna latar belakang secara interaktif.
 
 Here's a breakdown of the main components and functionalities:
 
 1. **Import Libraries:**
-   - `cv2`: OpenCV library for computer vision tasks.
-   - `mediapipe`: A library for building applications around machine learning solutions.
+   - `cv2`: Perpustakaan OpenCV untuk tugas pengolahan citra.
+   - `mediapipe`: Sebuah perpustakaan untuk membangun aplikasi berbasis solusi pembelajaran mesin.
 
 ```python
 import cv2
@@ -23,8 +23,8 @@ mp_selfie_segmentation = mp.solutions.selfie_segmentation
 ```
 
 3. **Configuration:**
-   - Set the path for the input image (`image_path`) and whether to use a webcam (`use_webcam`).
-   - Set the default and selected background colors.
+   - Set file gambar yang ingin digunakan (`image_path`) atau bisa juga dengan webcam (`use_webcam`).
+   - Set warna default untuk backgroundnya
 
 ```python
 image_path = "image/person2.jpeg"
@@ -43,8 +43,8 @@ selected_color = bg_color
 ```
 
 5. **Mouse Click Event Handling:**
-   - Capture the color at the clicked point and save it to a file (`color.txt`).
-   - Right-click to print the selected color in hexadecimal format.
+   - simpan warna yang di di click oleh cursor lalu otomatis tersimpan di (`color.txt`).
+   - klik kanan untuk merubah backgorund sesuai dengan yang di tunjur oleh cursor.
 
 ```python
 cv2.setMouseCallback('MediaPipe Selfie Segmentation', on_mouse_click)
@@ -85,4 +85,4 @@ if key == 27:  # Press Esc to exit
 cv2.destroyAllWindows()
 ```
 
-Note: This program uses selfie segmentation, allowing users to choose a background color by clicking on it. The selected color is displayed and saved to a file, and the background of the segmented person is replaced with the selected color in real-time. The FPS and selected color information are also displayed on the output window.
+Note: Program ini menggunakan segmentasi selfie, memungkinkan pengguna memilih warna latar belakang dengan mengkliknya. Warna yang dipilih ditampilkan dan disimpan ke dalam file, dan latar belakang orang yang tersegmentasi digantikan dengan warna yang dipilih secara real-time. Informasi FPS dan warna yang dipilih juga ditampilkan pada jendela output.
